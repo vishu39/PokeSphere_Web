@@ -22,7 +22,7 @@ export const CURRENT_RELEASE: ReleaseInfo = {
   fileName: "PokeSphere.apk",
   downloadUrl: "/downloads/PokeSphere.apk",
   fileSize: "21.6 MB",
-  sha256: "157FC83959AB0924C89AD7214C606137719D761FE77A1161CAD1EE14D25F20C5",
+  sha256: "3CEB9A6E3DD13235F0CC687005A89A5CE51CA01B7DD509AF0CB0BA83D92A4FFB",
   minAndroid: "Android 10 (API 29) to Android 15",
   targetArchitecture: "ARM64-v8a",
   testedGameVersion: "Pokémon GO 0.345.x - 0.355.x",
