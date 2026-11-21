@@ -16,13 +16,13 @@ export interface ReleaseInfo {
 }
 
 export const CURRENT_RELEASE: ReleaseInfo = {
-  version: "2026.11.21-1433",
-  tag: "v2026.11.21-1433",
+  version: "2026.11.21-1510",
+  tag: "v2026.11.21-1510",
   date: "November 21, 2026",
   fileName: "PokeSphere.apk",
   downloadUrl: "/downloads/PokeSphere.apk",
   fileSize: "22.2 MB",
-  sha256: "A0F8FD1C1360BCC10AB8AE9B2392CE2A5646BB08BC63264E43FC532A62CD8988",
+  sha256: "2DDB62132F87CA7F64C07942E5A968BB0B20269CE09F89C871C479040023A25E",
   minAndroid: "Android 10 (API 29) to Android 15",
   targetArchitecture: "ARM64-v8a",
   testedGameVersion: "Pokémon GO 0.345.x - 0.355.x",
