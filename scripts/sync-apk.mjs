@@ -1,8 +1,9 @@
 // Puts the newest PgSphere build on the website (run by PgSphere's tools\release.ps1, or `npm run sync-apk`).
 //
 // What it does, in order:
-//   1. Finds PgSphere's newest release build: ..\PgSphere\app\android\app\build\outputs\apk\release\app-release.apk,
+//   1. Finds PgSphere's newest release build: <PgSphere folder>\app\android\app\build\outputs\apk\release\app-release.apk,
 //      with its version number from output-metadata.json (written by Gradle at every build).
+//      The PgSphere folder: see findPgSphereRoot() below (release.ps1 passes it).
 //   2. Copies it to public/downloads/PokeSphere.apk (the website's Download button).
 //   3. Writes public/update.json: what the PgSphere app reads to show "New update available" (AppUpdater.kt).
 //   4. Updates src/data/downloadData.ts (version, date, size, SHA-256 shown on the website).
@@ -19,7 +20,26 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const webRoot = path.resolve(__dirname, '..');
-const pgSphereRoot = path.resolve(webRoot, '..', 'PgSphere');
+const pgSphereRoot = findPgSphereRoot();
+console.log(`PgSphere folder: ${pgSphereRoot}`);
+
+// Finds PgSphere's folder (the one whose build goes on the website).
+//   1. release.ps1 gives it as the first argument: node scripts/sync-apk.mjs "<PgSphere folder>".
+//   2. Without it (npm run sync-apk): PgSphere inside PgSphere-Suite (in use from 2026-11-21).
+//   3. Else the old ..\PgSphere folder.
+// Why: the old ..\PgSphere folder still exists as a backup with an OLD build. On 2026-11-21 the script took that old
+// build instead of the new one from the suite, and release.ps1 stopped ("the sync did not use this build").
+function findPgSphereRoot() {
+  const fromArgument = process.argv[2];
+  if (fromArgument) {
+    return path.resolve(fromArgument);
+  }
+  const insideSuite = path.resolve(webRoot, '..', 'PgSphere-Suite', 'PgSphere');
+  if (fs.existsSync(insideSuite)) {
+    return insideSuite;
+  }
+  return path.resolve(webRoot, '..', 'PgSphere');
+}
 
 const buildDir = path.join(pgSphereRoot, 'app', 'android', 'app', 'build', 'outputs', 'apk', 'release');
 const builtApkPath = path.join(buildDir, 'app-release.apk');
